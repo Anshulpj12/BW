@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Magical Birthday Wish For You</title>
+  <meta name="description" content="Open this magical gift box to receive a personalized, animated birthday wishing experience filled with candles to blow, balloons to pop, and stars to cast wishes upon.">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body class="theme-cosmic">
+
+  <!-- Background Particle Canvas (Confetti, Starry Sky, Sparkles) -->
+  <canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+  <!-- --- HEADER CONTROLS --- -->
+  <div class="header-controls">
+    <!-- Theme Toggle Button -->
+    <button id="theme-toggle" class="control-btn" aria-label="Toggle Theme">
+      <svg viewBox="0 0 24 24" class="theme-icon-pastel">
+        <path d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-2.98 0-5.4-2.42-5.4-5.4 0-1.81.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/>
+      </svg>
+      <span>Switch Theme</span>
+    </button>
+
+    <!-- Audio Toggle Button -->
+    <button id="audio-toggle" class="control-btn" aria-label="Toggle Audio">
+      <svg viewBox="0 0 24 24">
+        <path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM12 3L9.12 5.88 12 8.76V3zm-9 6v6h4l5 5V4L7 9H3zm13.5 3c0 2.87-1.67 5.34-4 6.5v2.1c3.43-1.27 6-4.54 6-8.6s-2.57-7.33-6-8.6v2.1c2.33 1.16 4 3.63 4 6.5z"/>
+      </svg>
+      <span>Music On</span>
+    </button>
+
+    <!-- Creator Console Button -->
+    <button id="creator-btn" class="control-btn" aria-label="Open Creator Panel">
+      <svg viewBox="0 0 24 24">
+        <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+      </svg>
+      <span>Create Wish</span>
+    </button>
+  </div>
+
+  <!-- --- LANDING UNWRAPPING SCREEN --- -->
+  <section id="landing-screen" aria-label="Gift Box Intro">
+    <div class="landing-prompt">
+      <h1 id="landing-title">A Magical Wish is Waiting...</h1>
+      <p>Tap the gift box to open your birthday surprise!</p>
+    </div>
+
+    <!-- 3D Gift Box Interactive Component -->
+    <div class="gift-box-wrapper" id="gift-box-trigger" role="button" tabindex="0" aria-label="Open Birthday Gift Box">
+      <div class="gift-box">
+        <!-- Cube faces -->
+        <div class="gift-face gift-front">
+          <div class="ribbon-vertical"></div>
+          <div class="ribbon-horizontal"></div>
+        </div>
+        <div class="gift-face gift-back">
+          <div class="ribbon-vertical"></div>
+          <div class="ribbon-horizontal"></div>
+        </div>
+        <div class="gift-face gift-left">
+          <div class="ribbon-vertical"></div>
+          <div class="ribbon-horizontal"></div>
+        </div>
+        <div class="gift-face gift-right">
+          <div class="ribbon-vertical"></div>
+          <div class="ribbon-horizontal"></div>
+        </div>
+        <div class="gift-face gift-top">
+          <div class="ribbon-cross-1"></div>
+          <div class="ribbon-cross-2"></div>
+          <div class="gift-bow" aria-hidden="true">
+            <div class="bow-loop-1"></div>
+            <div class="bow-loop-2"></div>
+            <div class="bow-knot"></div>
+          </div>
+        </div>
+        <div class="gift-face gift-bottom"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- --- MAIN WISH SLIDESHOW APP --- -->
+  <main id="app-container" class="hidden">
+    <!-- Slide Window -->
+    <div class="slide-window" id="slide-window">
+
+      <!-- SLIDE 1: INTERACTIVE CAKE & CANDLES -->
+      <section id="slide-cake" class="slide-card active" aria-label="Birthday Cake Stand">
+        <h2 class="letter-title" style="text-align: center; border-bottom: none; margin-bottom: 0;">Make a Wish!</h2>
+        <p class="well-desc" style="margin-bottom: 15px;">Tap or click the candles to blow them out.</p>
+        
+        <div class="cake-container" aria-label="Cake with candles">
+          <div class="cake-stand"></div>
+          <!-- Layer 1 -->
+          <div class="cake-layer layer-bottom">
+            <div class="frosting-drip"></div>
+          </div>
+          <!-- Layer 2 -->
+          <div class="cake-layer layer-top">
+            <div class="frosting-drip"></div>
+          </div>
+          
+          <!-- Candles Row -->
+          <div class="candles-row" id="candles-row">
+            <div class="candle-wrapper" role="button" tabindex="0" aria-label="Candle 1">
+              <div class="flame"></div>
+              <div class="candle-wick"></div>
+              <div class="candle-body"></div>
+              <div class="smoke-cloud"></div>
+            </div>
+            <div class="candle-wrapper" role="button" tabindex="0" aria-label="Candle 2">
+              <div class="flame"></div>
+              <div class="candle-wick"></div>
+              <div class="candle-body"></div>
+              <div class="smoke-cloud"></div>
+            </div>
+            <div class="candle-wrapper" role="button" tabindex="0" aria-label="Candle 3">
+              <div class="flame"></div>
+              <div class="candle-wick"></div>
+              <div class="candle-body"></div>
+              <div class="smoke-cloud"></div>
+            </div>
+            <div class="candle-wrapper" role="button" tabindex="0" aria-label="Candle 4">
+              <div class="flame"></div>
+              <div class="candle-wick"></div>
+              <div class="candle-body"></div>
+              <div class="smoke-cloud"></div>
+            </div>
+            <div class="candle-wrapper" role="button" tabindex="0" aria-label="Candle 5">
+              <div class="flame"></div>
+              <div class="candle-wick"></div>
+              <div class="candle-body"></div>
+              <div class="smoke-cloud"></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="prompt-tip" id="candles-feedback">Blow out all 5 candles!</p>
+      </section>
+
+      <!-- SLIDE 2: LETTER MESSAGE -->
+      <section id="slide-letter" class="slide-card" aria-label="Personal Birthday Message">
+        <div class="letter-envelope">
+          <h2 class="letter-title" id="letter-recipient-title">A Special Birthday Wish</h2>
+          <div class="letter-message" id="letter-body-content">Loading your beautiful message...</div>
+          <div class="letter-signature" id="letter-author-signature">— Best Wishes & Warmth</div>
+        </div>
+      </section>
+
+      <!-- SLIDE 3: WISH BALLOONS (NO IMAGES) -->
+      <section id="slide-balloons" class="slide-card" aria-label="Celebratory Floating Balloons">
+        <h2 class="letter-title" style="text-align: center; border-bottom: none; margin-bottom: 0;">Pop the Balloons!</h2>
+        <p class="well-desc" style="margin-bottom: 12px;">Tap each floating balloon to release a sweet birthday memory.</p>
+        
+        <div class="balloons-area" id="balloons-area">
+          <div class="pop-instructions">Tap to pop!</div>
+        </div>
+
+        <div class="memory-count" id="balloons-counter">Popped: 0 / 5</div>
+      </section>
+
+      <!-- SLIDE 4: SURPRISE FORTUNE ENVELOPES (NEW) -->
+      <section id="slide-fortunes" class="slide-card" aria-label="Surprise Birthday Fortunes">
+        <h2 class="letter-title" style="text-align: center; border-bottom: none; margin-bottom: 0;">Unwrap Your Fortunes</h2>
+        <p class="well-desc" style="margin-bottom: 24px;">Tap each envelope to open and reveal a special birthday prediction!</p>
+        
+        <div class="envelopes-container" id="envelopes-container">
+          <div class="envelope-wrapper" role="button" tabindex="0" aria-label="Envelope 1" data-index="0">
+            <div class="envelope-card">
+              <div class="envelope-front">
+                <div class="envelope-seal">✨</div>
+                <div class="envelope-label">Love & Life</div>
+              </div>
+              <div class="envelope-back">
+                <div class="fortune-content" id="fortune-0">A year of incredible adventures is waiting for you!</div>
+              </div>
+            </div>
+          </div>
+          <div class="envelope-wrapper" role="button" tabindex="0" aria-label="Envelope 2" data-index="1">
+            <div class="envelope-card">
+              <div class="envelope-front">
+                <div class="envelope-seal">⭐</div>
+                <div class="envelope-label">Joy & Laughs</div>
+              </div>
+              <div class="envelope-back">
+                <div class="fortune-content" id="fortune-1">Your laughter will light up every room you enter!</div>
+              </div>
+            </div>
+          </div>
+          <div class="envelope-wrapper" role="button" tabindex="0" aria-label="Envelope 3" data-index="2">
+            <div class="envelope-card">
+              <div class="envelope-front">
+                <div class="envelope-seal">💫</div>
+                <div class="envelope-label">Dream & Success</div>
+              </div>
+              <div class="envelope-back">
+                <div class="fortune-content" id="fortune-2">A wonderful, unexpected success is heading your way!</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="prompt-tip" id="fortunes-counter-text">Open all 3 envelopes!</p>
+      </section>
+
+
+
+      <!-- SLIDE 6: THE WISHING WELL STARRY SKY -->
+      <section id="slide-well" class="slide-card" aria-label="Make a Wish Star Well">
+        <h2 class="letter-title" style="text-align: center; border-bottom: none; margin-bottom: 10px;">The Starry Wishing Well</h2>
+        <p class="well-desc">Type your deepest wish and cast it into the cosmic night sky to make it come true.</p>
+        
+        <div class="wishing-well-wrapper">
+          <form class="wishing-form" id="wishing-form" onsubmit="return false;">
+            <input type="text" id="user-wish-input" class="wishing-input" placeholder="Type your wish here..." maxlength="60" required>
+            <button type="submit" class="wishing-submit">Cast Wish</button>
+          </form>
+
+          <!-- Cosmic Star Catcher Game (Unlocked after casting wish) -->
+          <div id="star-game" class="hidden">
+            <p class="game-instructions">Catch the falling neon stars for extra luck! Move your mouse / drag catcher.</p>
+            <div class="game-canvas-wrapper">
+              <canvas id="game-canvas"></canvas>
+            </div>
+            <div class="game-stats">
+              <span class="game-score">Stars Caught: <span id="game-score-val">0</span></span>
+              <button id="reset-game-btn" class="wishing-submit" style="padding: 6px 14px; font-size: 0.8rem; box-shadow: none; margin: 0;">Play Again</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- Bottom Slide Navigation Controls -->
+    <div class="navigation-controls">
+      <button class="nav-btn" id="prev-btn" disabled>
+        <svg viewBox="0 0 24 24">
+          <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+        </svg>
+        Back
+      </button>
+      <button class="nav-btn" id="next-btn">
+        Next
+        <svg viewBox="0 0 24 24">
+          <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z"/>
+        </svg>
+      </button>
+    </div>
+  </main>
+
+  <!-- --- CREATOR DRAWER PANEL --- -->
+  <div id="modal-overlay" aria-hidden="true"></div>
+  <aside id="creator-modal" aria-label="Creator Customization Panel">
+    <div class="modal-header">
+      <h2>Create Custom Wish</h2>
+      <button id="close-creator" class="close-btn" aria-label="Close Panel">
+        <svg viewBox="0 0 24 24">
+          <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+        </svg>
+      </button>
+    </div>
+
+    <form id="creator-form" onsubmit="return false;" style="display:flex; flex-direction:column; gap:16px;">
+      
+      <div class="form-row">
+        <div class="form-group">
+          <label for="c-name">Recipient Name</label>
+          <input type="text" id="c-name" placeholder="e.g. Nancy" required maxlength="20">
+        </div>
+        <div class="form-group">
+          <label for="c-age">Age (Optional)</label>
+          <input type="number" id="c-age" placeholder="e.g. 25" min="1" max="120">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="c-sender">Your Name (Sender)</label>
+        <input type="text" id="c-sender" placeholder="e.g. Rahul" required maxlength="20">
+      </div>
+
+      <div class="form-group">
+        <label for="c-message">Poetic Message</label>
+        <textarea id="c-message" rows="4" placeholder="Enter your heartfelt message..." required maxlength="400"></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Memory Balloons (Enter 5, one per line)</label>
+        <textarea id="c-balloons" rows="5" placeholder="Memory 1&#10;Memory 2&#10;Memory 3&#10;Memory 4&#10;Memory 5" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Magical Fortunes (Enter 3 blessings, one per line)</label>
+        <textarea id="c-fortunes" rows="3" placeholder="Fortune 1&#10;Fortune 2&#10;Fortune 3" required></textarea>
+      </div>
+
+      <div class="form-group">
+        <label for="c-theme">Default Theme</label>
+        <select id="c-theme" class="wishing-input" style="border-radius: 12px; background: rgba(255,255,255,0.06); color: var(--text-main); border: 1px solid var(--surface-border);">
+          <option value="cosmic" style="color:#333;">Cosmic Neon</option>
+          <option value="rose" style="color:#333;">Elegant Rose</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-generate">
+        <svg viewBox="0 0 24 24" style="width:18px; height:18px; fill:currentColor;">
+          <path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+        </svg>
+        Generate Magical Link
+      </button>
+    </form>
+
+    <!-- Copyable URL Output area -->
+    <div class="link-output-area" id="link-output-area">
+      <label style="font-family:var(--font-headline); font-weight:700; font-size:0.85rem; color:var(--text-muted);">Share this magical link with them:</label>
+      <div class="link-box" id="generated-link-text"></div>
+      <button class="btn-copy" id="copy-link-btn">Copy to Clipboard</button>
+    </div>
+  </aside>
+
+  <!-- Core Javascript Logic -->
+  <script src="app.js"></script>
+</body>
+</html>
