@@ -12,7 +12,7 @@ const state = {
   musicTimeout: null,
   lastTrailSpawn: 0,
   customData: {
-    name: 'Nancy',
+    name: 'kunali',
     age: '',
     sender: 'Your Friend',
     message: `On this special day, may your heart be as light as a balloon, your smile as bright as a candle's flame, and your future as sparkling as a shooting star.\n\nYou bring so much light and joy into the lives of everyone around you. Here's to celebrating the wonderful person you are, and to all the beautiful memories yet to be made!\n\nHappy Birthday!`,

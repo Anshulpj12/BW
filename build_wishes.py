@@ -189,7 +189,7 @@ def generate_physical_card(name, age, sender, message, theme, wish_url):
 
 def main():
     parser = argparse.ArgumentParser(description="Magical Birthday Wish Compiler & Graphic Card Generator")
-    parser.add_argument('--name', default="Nancy", help="Recipient name")
+    parser.add_argument('--name', default="kunali", help="Recipient name")
     parser.add_argument('--age', default="", help="Recipient age (optional)")
     parser.add_argument('--sender', default="Your Friend", help="Sender name")
     parser.add_argument('--theme', default="cosmic", choices=["cosmic", "rose"], help="Theme selection")
